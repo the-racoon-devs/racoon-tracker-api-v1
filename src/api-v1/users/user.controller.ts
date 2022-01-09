@@ -1,9 +1,6 @@
 //import * as bcrypt from 'bcrypt';
 import { Request, Response } from "express";
-import PG_ERROR from "../../helpers/postgresCodes";
 import mongo from "../../config/db";
-import getUser from "./user.utils";
-import getOrganization from "../organizations/organization.utils";
 
 export default class UserController {
   public upsertUser = async (req: Request, res: Response): Promise<any> => {
