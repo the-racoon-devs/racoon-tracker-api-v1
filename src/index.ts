@@ -1,8 +1,6 @@
 import * as dotenv from "dotenv";
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 
-console.log(process.env.NODE_ENV);
-
 import server from "./api";
 
 server.listen(process.env.API_PORT || "5000", () => {

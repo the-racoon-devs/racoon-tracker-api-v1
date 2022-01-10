@@ -1,5 +1,4 @@
 import { Router } from "express";
-import jwtAuthCheck from "../../helpers/verifyToken";
 import Controller from "./user.controller";
 
 const users: Router = Router();
