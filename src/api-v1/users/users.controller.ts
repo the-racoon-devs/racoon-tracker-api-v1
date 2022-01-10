@@ -75,7 +75,12 @@ export default class UserController {
       try {
         const db = await mongo.connect();
         try {
-          users = await mongo.db().collection("users").find().toArray();
+          users = await mongo
+            .db()
+            .collection("users")
+            .find()
+            .sort([["_id", -1]])
+            .toArray();
           res.status(200).send({
             success: true,
             data: users,

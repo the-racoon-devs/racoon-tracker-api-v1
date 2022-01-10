@@ -33,8 +33,6 @@ export default class UserController {
         owner: new ObjectId(project.owner),
       };
 
-      console.log(project);
-
       await mongo.connect();
 
       const result = await mongo
@@ -143,6 +141,103 @@ export default class UserController {
         success: true,
         data: projects,
       });
+    } catch (e) {
+      console.error(e);
+      res.status(500).send({
+        success: false,
+        message: e.message,
+      });
+    } finally {
+      await mongo.close();
+    }
+  };
+
+  public createTicket = async (req: Request, res: Response): Promise<any> => {
+    try {
+      await mongo.connect();
+      var ticket = req.body;
+      const result = await mongo.db().collection("tickets").insertOne(ticket);
+      res.status(200).send({
+        success: true,
+        data: result,
+      });
+    } catch (e) {
+      console.error(e);
+      res.status(500).send({
+        success: false,
+        message: e.message,
+      });
+    } finally {
+      await mongo.close();
+    }
+  };
+
+  public updateTicket = async (req: Request, res: Response): Promise<any> => {
+    try {
+      var ticket = req.body;
+      ticket = {
+        ...ticket,
+        _id: new ObjectId(ticket._id),
+        projectId: new ObjectId(ticket.projectId),
+        createdBy: new ObjectId(ticket.createdBy),
+        assignedTo: new ObjectId(ticket.assignedTo),
+        deadline: new Date(ticket.deadline),
+      };
+
+      await mongo.connect();
+
+      const result = await mongo
+        .db()
+        .collection("tickets")
+        .updateOne({ _id: new ObjectId(ticket._id) }, { $set: ticket });
+
+      if (result.matchedCount === 0) {
+        res.status(404).send({
+          success: false,
+          message: "Ticket not found",
+        });
+      } else if (result.modifiedCount === 0) {
+        res.status(400).send({
+          success: false,
+          message: "Ticket not updated",
+        });
+      } else {
+        res.status(200).send({
+          success: true,
+          data: result,
+        });
+      }
+    } catch (e) {
+      console.error(e);
+      res.status(500).send({
+        success: false,
+        message: e.message,
+      });
+    } finally {
+      await mongo.close();
+    }
+  };
+
+  public deleteTicket = async (req: Request, res: Response): Promise<any> => {
+    try {
+      await mongo.connect();
+      const result = await mongo
+        .db()
+        .collection("tickets")
+        .deleteOne({
+          _id: new ObjectId(req.body._id),
+        });
+      if (result.deletedCount === 0) {
+        res.status(404).send({
+          success: false,
+          message: "Ticket not found",
+        });
+      } else {
+        res.status(200).send({
+          success: true,
+          data: result,
+        });
+      }
     } catch (e) {
       console.error(e);
       res.status(500).send({
