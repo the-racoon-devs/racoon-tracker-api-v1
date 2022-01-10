@@ -337,4 +337,65 @@ export default class UserController {
       await mongo.close();
     }
   };
+
+  public removeUser = async (req: Request, res: Response): Promise<any> => {
+    try {
+      await mongo.connect();
+      var project = await mongo
+        .db()
+        .collection("projects")
+        .findOne({
+          _id: new ObjectId(req.params._id),
+        });
+
+      if (project === null) {
+        res.status(404).send({
+          success: false,
+          message: "Project not found",
+        });
+      } else {
+        project = {
+          ...project,
+          ...{
+            collabs: project.collabs
+              .filter((_id) => _id !== req.body._id)
+              .map((_id) => new ObjectId(_id)),
+            superCollabs: project.superCollabs
+              .filter((_id) => _id !== req.body._id)
+              .map((_id) => new ObjectId(_id)),
+          },
+        };
+        console.log(project);
+        const result = await mongo
+          .db()
+          .collection("projects")
+          .updateOne({ _id: new ObjectId(req.params._id) }, { $set: project });
+
+        if (result.matchedCount === 0) {
+          res.status(404).send({
+            success: false,
+            message: "Users not found",
+          });
+        } else if (result.modifiedCount === 0) {
+          res.status(400).send({
+            success: false,
+            message: "Users not updated",
+          });
+        } else {
+          res.status(200).send({
+            success: true,
+            data: result,
+          });
+        }
+      }
+    } catch (e) {
+      console.error(e);
+      res.status(500).send({
+        success: false,
+        message: e.message,
+      });
+    } finally {
+      await mongo.close();
+    }
+  };
 }

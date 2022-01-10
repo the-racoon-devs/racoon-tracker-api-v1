@@ -9,7 +9,7 @@ projects.get("/", controller.getAllProjects); // Get all projects
 projects.post("/create", controller.createProject); // Create a new project
 
 projects.put("/:_id/users", controller.addUser); // Create a new project
-//projects.post("/:_id/users", controller.removeUser); // Create a new project
+projects.delete("/:_id/users", controller.removeUser); // Create a new project
 
 projects.get("/:_id/tickets", controller.getTickets); // Create a new project
 projects.post("/:_id/tickets", controller.createTicket); // Create a new project
