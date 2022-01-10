@@ -292,4 +292,49 @@ export default class UserController {
       await mongo.close();
     }
   };
+
+  public addUser = async (req: Request, res: Response): Promise<any> => {
+    try {
+      var project = req.body;
+      project = {
+        ...project,
+        ...{
+          collabs: project.collabs.map((_id) => new ObjectId(_id)),
+          superCollabs: project.superCollabs.map((_id) => new ObjectId(_id)),
+        },
+      };
+
+      await mongo.connect();
+
+      const result = await mongo
+        .db()
+        .collection("projects")
+        .updateOne({ _id: new ObjectId(req.params._id) }, { $set: project });
+
+      if (result.matchedCount === 0) {
+        res.status(404).send({
+          success: false,
+          message: "Project not found",
+        });
+      } else if (result.modifiedCount === 0) {
+        res.status(400).send({
+          success: false,
+          message: "Project not updated",
+        });
+      } else {
+        res.status(200).send({
+          success: true,
+          data: result,
+        });
+      }
+    } catch (e) {
+      console.error(e);
+      res.status(500).send({
+        success: false,
+        message: e.message,
+      });
+    } finally {
+      await mongo.close();
+    }
+  };
 }
