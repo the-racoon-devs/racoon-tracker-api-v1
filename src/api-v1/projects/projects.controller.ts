@@ -354,15 +354,16 @@ export default class UserController {
           message: "Project not found",
         });
       } else {
+        console.log(req.body._id);
         project = {
           ...project,
           ...{
-            collabs: project.collabs
-              .filter((_id) => _id !== req.body._id)
-              .map((_id) => new ObjectId(_id)),
-            superCollabs: project.superCollabs
-              .filter((_id) => _id !== req.body._id)
-              .map((_id) => new ObjectId(_id)),
+            collabs: project.collabs.filter(
+              (_id) => _id === new ObjectId(req.body._id)
+            ),
+            superCollabs: project.superCollabs.filter(
+              (_id) => _id === new ObjectId(req.body._id)
+            ),
           },
         };
         console.log(project);
