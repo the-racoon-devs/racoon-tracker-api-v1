@@ -4,13 +4,14 @@ import Controller from "./projects.controller";
 const users: Router = Router();
 const controller = new Controller();
 
-// Retrieve all Users
-users.get("/", controller.getAllUsers);
-users.get("/:email", controller.getUser);
+users.post("/create", controller.createProject); // Create a new project
+users.get("/", controller.getAllProjects); // Get all projects
+users.get("/:_id", controller.getProject); // Get a project by id
+users.put("/:_id", controller.updateProject); // Update a project by id
+users.delete("/:_id", controller.deleteProject); // Delete a project by id
 
 // Register or Update a User
 //users.put("/", controller.upsertUser);
-users.post("/create", controller.createProject);
 
 // Retrieve all Users
 

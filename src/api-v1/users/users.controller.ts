@@ -23,7 +23,7 @@ export default class UserController {
 
       res.status(200).send({
         success: true,
-        data: result.data,
+        data: result,
       });
     } catch (e) {
       console.error(e);
@@ -49,10 +49,17 @@ export default class UserController {
             sort: { email: 1 }, // Sort by email ascending
           }
         );
-      res.status(200).send({
-        success: true,
-        data: result,
-      });
+      if (result === null) {
+        res.status(404).send({
+          success: false,
+          message: "User not found",
+        });
+      } else {
+        res.status(200).send({
+          success: true,
+          data: result,
+        });
+      }
     } catch (e) {
       console.error(e);
       res.status(500).send(e);
