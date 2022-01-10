@@ -52,7 +52,7 @@ export default class UserController {
       console.log(result);
       res.status(200).send({
         success: true,
-        data: result.data,
+        data: result,
       });
     } catch (e) {
       console.error(e);

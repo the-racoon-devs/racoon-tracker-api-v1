@@ -1,5 +1,7 @@
 import * as dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
+
+console.log(process.env.NODE_ENV);
 
 import server from "./api";
 
