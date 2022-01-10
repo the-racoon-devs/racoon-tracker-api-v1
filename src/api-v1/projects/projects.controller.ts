@@ -156,6 +156,16 @@ export default class UserController {
     try {
       await mongo.connect();
       var ticket = req.body;
+
+      ticket = {
+        ...ticket,
+        _id: new ObjectId(ticket._id),
+        project: new ObjectId(ticket.project),
+        createdBy: new ObjectId(ticket.createdBy),
+        assignedTo: new ObjectId(ticket.assignedTo),
+        deadline: new Date(ticket.deadline),
+      };
+
       const result = await mongo.db().collection("tickets").insertOne(ticket);
       res.status(200).send({
         success: true,
@@ -178,7 +188,7 @@ export default class UserController {
       ticket = {
         ...ticket,
         _id: new ObjectId(ticket._id),
-        projectId: new ObjectId(ticket.projectId),
+        project: new ObjectId(ticket.projectId),
         createdBy: new ObjectId(ticket.createdBy),
         assignedTo: new ObjectId(ticket.assignedTo),
         deadline: new Date(ticket.deadline),
@@ -231,6 +241,40 @@ export default class UserController {
         res.status(404).send({
           success: false,
           message: "Ticket not found",
+        });
+      } else {
+        res.status(200).send({
+          success: true,
+          data: result,
+        });
+      }
+    } catch (e) {
+      console.error(e);
+      res.status(500).send({
+        success: false,
+        message: e.message,
+      });
+    } finally {
+      await mongo.close();
+    }
+  };
+
+  public getTickets = async (req: Request, res: Response): Promise<any> => {
+    try {
+      await mongo.connect();
+      const result = await mongo
+        .db()
+        .collection("tickets")
+        .find({
+          project: new ObjectId(req.params._id),
+        })
+        .sort([["_id", -1]])
+        .toArray();
+
+      if (result.length === 0) {
+        res.status(404).send({
+          success: false,
+          message: "Tickets not found",
         });
       } else {
         res.status(200).send({
