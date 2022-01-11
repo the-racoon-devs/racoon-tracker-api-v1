@@ -110,7 +110,7 @@ export default class UserController {
   public getProjects = async (req: Request, res: Response): Promise<any> => {
     try {
       await mongo.connect();
-      var projects = await mongo
+      const owned = await mongo
         .db()
         .collection("projects")
         .find(
@@ -121,9 +121,7 @@ export default class UserController {
               },
               {
                 superCollabs: {
-                  $elemMatch: {
-                    _id: new ObjectId(req.params._id),
-                  },
+                  $in: [new ObjectId(req.params._id)],
                 },
               },
             ],
@@ -132,7 +130,24 @@ export default class UserController {
         )
         .sort([["_id", -1]])
         .toArray();
-      if (projects.length === 0) {
+
+      const assigned = await mongo
+        .db()
+        .collection("projects")
+        .find(
+          {
+            collabs: {
+              $in: [new ObjectId(req.params._id)],
+            },
+          },
+          { sort: { _id: -1 } }
+        )
+        .toArray();
+
+      var projects = { owned: owned, assigned: assigned };
+      console.log(projects);
+
+      if (projects.owned.length === 0 && projects.assigned.length === 0) {
         res.status(404).send({
           success: false,
           message: "User has no projects",

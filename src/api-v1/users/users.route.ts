@@ -8,7 +8,6 @@ const controller = new Controller();
 users.get("/", controller.getAllUsers);
 users.get("/:email", controller.getUser);
 
-// Register or Update a User
 users.put("/", controller.upsertUser);
 
 users.get("/:_id/projects", controller.getProjects);
