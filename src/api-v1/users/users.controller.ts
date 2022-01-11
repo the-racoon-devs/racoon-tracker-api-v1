@@ -23,10 +23,32 @@ export default class UserController {
           { upsert: true }
         );
 
-      res.status(200).send({
-        success: true,
-        data: result,
-      });
+      console.log(result);
+
+      const userData = await mongo
+        .db()
+        .collection("users")
+        .findOne(
+          {
+            email: {
+              $eq: user.email, // Check if the email is the same
+            },
+          },
+          {
+            sort: { email: 1 }, // Sort by email ascending
+          }
+        );
+      if (userData === null) {
+        res.status(404).send({
+          success: false,
+          message: "User not found",
+        });
+      } else {
+        res.status(200).send({
+          success: true,
+          data: userData,
+        });
+      }
     } catch (e) {
       console.error(e);
       res.status(500).send(e);
