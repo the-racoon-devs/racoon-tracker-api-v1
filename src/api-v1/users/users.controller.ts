@@ -2,6 +2,8 @@
 import { Request, Response } from "express";
 import mongo from "../../config/db";
 
+var ObjectId = require("mongodb").ObjectId;
+
 export default class UserController {
   public upsertUser = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -94,6 +96,51 @@ export default class UserController {
           success: false,
           message: err,
           givenParameters: req.body,
+        });
+      }
+    } catch (err) {
+      res.status(500).send({
+        success: false,
+        message: err.toString(),
+        data: null,
+      });
+    }
+  };
+
+  public getProjects = async (req: Request, res: Response): Promise<any> => {
+    try {
+      await mongo.connect();
+      var projects = await mongo
+        .db()
+        .collection("projects")
+        .find(
+          {
+            $or: [
+              {
+                owner: new ObjectId(req.params._id),
+              },
+              {
+                superCollabs: {
+                  $elemMatch: {
+                    _id: new ObjectId(req.params._id),
+                  },
+                },
+              },
+            ],
+          },
+          { sort: { _id: -1 } }
+        )
+        .sort([["_id", -1]])
+        .toArray();
+      if (projects.length === 0) {
+        res.status(404).send({
+          success: false,
+          message: "User has no projects",
+        });
+      } else {
+        res.status(200).send({
+          success: true,
+          data: projects,
         });
       }
     } catch (err) {

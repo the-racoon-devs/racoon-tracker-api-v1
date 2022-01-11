@@ -357,16 +357,13 @@ export default class UserController {
         console.log(req.body._id);
         project = {
           ...project,
-          ...{
-            collabs: project.collabs.filter(
-              (_id) => _id === new ObjectId(req.body._id)
-            ),
-            superCollabs: project.superCollabs.filter(
-              (_id) => _id === new ObjectId(req.body._id)
-            ),
-          },
+          collabs: project.collabs.filter(
+            (_id) => _id.toString() !== req.body._id
+          ),
+          superCollabs: project.superCollabs.filter(
+            (_id) => _id.toString() !== req.body._id
+          ),
         };
-        console.log(project);
         const result = await mongo
           .db()
           .collection("projects")
