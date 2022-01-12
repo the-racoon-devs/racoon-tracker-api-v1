@@ -13,9 +13,8 @@ export default class UserController {
         owner: req.body.owner, // Owner user _id
         description: req.body.description,
         githubUrl: req.body.githubUrl,
+        projectUrl: req.body.projectUrl,
         logoUrl: req.body.logoUrl,
-        collabs: req.body.collabs,
-        superCollabs: req.body.superCollabs,
       };
 
       const result = await mongo.db().collection("projects").insertOne(project);
@@ -41,6 +40,7 @@ export default class UserController {
         owner: new ObjectId(req.body.owner), // Owner user _id
         description: req.body.description,
         githubUrl: req.body.githubUrl,
+        projectUrl: req.body.projectUrl,
         logoUrl: req.body.logoUrl,
         collabs: req.body.collabs,
         superCollabs: req.body.superCollabs,
