@@ -8,7 +8,16 @@ export default class UserController {
   public createProject = async (req: Request, res: Response): Promise<any> => {
     try {
       await mongo.connect();
-      var project = req.body;
+      var project = {
+        name: req.body.name,
+        owner: req.body.owner, // Owner user _id
+        description: req.body.description,
+        githubLink: req.body.githubLink,
+        logoUrl: req.body.logoUrl,
+        collabs: req.body.collabs,
+        superCollabs: req.body.superCollabs,
+      };
+
       const result = await mongo.db().collection("projects").insertOne(project);
       res.status(200).send({
         success: true,
