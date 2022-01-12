@@ -1,4 +1,5 @@
 # the-racoon-app
+
 ![image](https://user-images.githubusercontent.com/57835412/148271293-d22f224c-722d-424c-b552-e800a2e91d36.png)
 
 ## Project setup
