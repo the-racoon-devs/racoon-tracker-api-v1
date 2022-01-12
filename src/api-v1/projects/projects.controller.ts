@@ -12,7 +12,7 @@ export default class UserController {
         name: req.body.name,
         owner: req.body.owner, // Owner user _id
         description: req.body.description,
-        githubLink: req.body.githubLink,
+        githubUrl: req.body.githubUrl,
         logoUrl: req.body.logoUrl,
         collabs: req.body.collabs,
         superCollabs: req.body.superCollabs,
@@ -40,7 +40,7 @@ export default class UserController {
         name: req.body.name,
         owner: new ObjectId(req.body.owner), // Owner user _id
         description: req.body.description,
-        githubLink: req.body.githubLink,
+        githubUrl: req.body.githubUrl,
         logoUrl: req.body.logoUrl,
         collabs: req.body.collabs,
         superCollabs: req.body.superCollabs,
