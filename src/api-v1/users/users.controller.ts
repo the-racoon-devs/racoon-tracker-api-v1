@@ -133,24 +133,20 @@ export default class UserController {
   public getProjects = async (req: Request, res: Response): Promise<any> => {
     try {
       await mongo.connect();
+      console.log(req.params._id);
       const owned = await mongo
         .db()
         .collection("projects")
-        .find(
-          {
-            $or: [
-              {
-                owner: new ObjectId(req.params._id),
-              },
-              {
-                superCollabs: {
-                  $in: [new ObjectId(req.params._id)],
-                },
-              },
-            ],
-          },
-          { sort: { _id: -1 } }
-        )
+        .find({
+          $or: [
+            {
+              owner: req.params._id,
+            },
+            {
+              superCollabs: req.params._id,
+            },
+          ],
+        })
         .sort([["_id", -1]])
         .toArray();
 
@@ -159,9 +155,7 @@ export default class UserController {
         .collection("projects")
         .find(
           {
-            collabs: {
-              $in: [new ObjectId(req.params._id)],
-            },
+            collabs: req.params._id,
           },
           { sort: { _id: -1 } }
         )
