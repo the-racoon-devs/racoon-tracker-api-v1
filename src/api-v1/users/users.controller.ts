@@ -38,6 +38,7 @@ export default class UserController {
             sort: { email: 1 }, // Sort by email ascending
           }
         );
+      console.log(userData);
       if (userData === null) {
         res.status(404).send({
           success: false,
