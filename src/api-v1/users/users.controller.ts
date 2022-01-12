@@ -10,7 +10,7 @@ export default class UserController {
       var user = req.body;
       await mongo.connect();
       var updatedUser = {
-        fullName: user.fullName,
+        fullName: user.name,
         email: user.email,
         sub: user.sub,
       };
