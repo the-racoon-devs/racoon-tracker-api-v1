@@ -13,7 +13,7 @@ export default class UserController {
         owner: req.body.owner, // Owner user _id
         description: req.body.description,
         githubUrl: req.body.githubUrl,
-        projectUrl: req.body.projectUrl,
+        siteUrl: req.body.siteUrl,
         logoUrl: req.body.logoUrl,
       };
 
@@ -23,7 +23,6 @@ export default class UserController {
         data: result,
       });
     } catch (e) {
-      console.error(e);
       res.status(500).send({
         success: false,
         message: e.message,
@@ -40,7 +39,7 @@ export default class UserController {
         owner: new ObjectId(req.body.owner), // Owner user _id
         description: req.body.description,
         githubUrl: req.body.githubUrl,
-        projectUrl: req.body.projectUrl,
+        siteUrl: req.body.siteUrl,
         logoUrl: req.body.logoUrl,
         collabs: req.body.collabs,
         superCollabs: req.body.superCollabs,
@@ -70,7 +69,6 @@ export default class UserController {
         });
       }
     } catch (e) {
-      console.error(e);
       res.status(500).send({
         success: false,
         message: e.message,
@@ -123,7 +121,7 @@ export default class UserController {
         });
 
       if (result === null) {
-        res.status(404).send({
+        res.status(201).send({
           success: false,
           message: "Project not found",
         });
@@ -134,7 +132,6 @@ export default class UserController {
         });
       }
     } catch (e) {
-      console.error(e);
       res.status(500).send({
         success: false,
         message: e.message,
@@ -155,7 +152,6 @@ export default class UserController {
         data: projects,
       });
     } catch (e) {
-      console.error(e);
       res.status(500).send({
         success: false,
         message: e.message,
@@ -185,7 +181,6 @@ export default class UserController {
         data: result,
       });
     } catch (e) {
-      console.error(e);
       res.status(500).send({
         success: false,
         message: e.message,
@@ -215,12 +210,12 @@ export default class UserController {
         .updateOne({ _id: new ObjectId(ticket._id) }, { $set: ticket });
 
       if (result.matchedCount === 0) {
-        res.status(404).send({
+        res.status(201).send({
           success: false,
           message: "Ticket not found",
         });
       } else if (result.modifiedCount === 0) {
-        res.status(400).send({
+        res.status(202).send({
           success: false,
           message: "Ticket not updated",
         });
@@ -251,7 +246,7 @@ export default class UserController {
           _id: new ObjectId(req.body._id),
         });
       if (result.deletedCount === 0) {
-        res.status(404).send({
+        res.status(201).send({
           success: false,
           message: "Ticket not found",
         });
@@ -285,7 +280,7 @@ export default class UserController {
         .toArray();
 
       if (result.length === 0) {
-        res.status(404).send({
+        res.status(201).send({
           success: false,
           message: "Tickets not found",
         });
@@ -325,12 +320,12 @@ export default class UserController {
         .updateOne({ _id: new ObjectId(req.params._id) }, { $set: project });
 
       if (result.matchedCount === 0) {
-        res.status(404).send({
+        res.status(201).send({
           success: false,
           message: "Project not found",
         });
       } else if (result.modifiedCount === 0) {
-        res.status(400).send({
+        res.status(202).send({
           success: false,
           message: "Project not updated",
         });
@@ -341,7 +336,6 @@ export default class UserController {
         });
       }
     } catch (e) {
-      console.error(e);
       res.status(500).send({
         success: false,
         message: e.message,
@@ -362,7 +356,7 @@ export default class UserController {
         });
 
       if (project === null) {
-        res.status(404).send({
+        res.status(201).send({
           success: false,
           message: "Project not found",
         });
@@ -383,12 +377,12 @@ export default class UserController {
           .updateOne({ _id: new ObjectId(req.params._id) }, { $set: project });
 
         if (result.matchedCount === 0) {
-          res.status(404).send({
+          res.status(201).send({
             success: false,
             message: "Users not found",
           });
         } else if (result.modifiedCount === 0) {
-          res.status(400).send({
+          res.status(202).send({
             success: false,
             message: "Users not updated",
           });
@@ -400,7 +394,6 @@ export default class UserController {
         }
       }
     } catch (e) {
-      console.error(e);
       res.status(500).send({
         success: false,
         message: e.message,

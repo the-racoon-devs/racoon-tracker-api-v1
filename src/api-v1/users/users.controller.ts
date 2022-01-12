@@ -40,7 +40,7 @@ export default class UserController {
         );
       console.log(userData);
       if (userData === null) {
-        res.status(404).send({
+        res.status(201).send({
           success: false,
           message: "User not found",
         });
@@ -75,7 +75,7 @@ export default class UserController {
           }
         );
       if (result === null) {
-        res.status(404).send({
+        res.status(201).send({
           success: false,
           message: "User not found",
         });
@@ -171,8 +171,8 @@ export default class UserController {
       console.log(projects);
 
       if (projects.owned.length === 0 && projects.assigned.length === 0) {
-        res.status(404).send({
-          success: false,
+        res.status(201).send({
+          success: true,
           message: "User has no projects",
         });
       } else {
