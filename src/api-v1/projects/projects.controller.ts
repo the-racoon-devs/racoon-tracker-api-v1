@@ -36,10 +36,14 @@ export default class UserController {
 
   public updateProject = async (req: Request, res: Response): Promise<any> => {
     try {
-      var project = req.body;
-      project = {
-        ...project,
-        owner: new ObjectId(project.owner),
+      var project = {
+        name: req.body.name,
+        owner: new ObjectId(req.body.owner), // Owner user _id
+        description: req.body.description,
+        githubLink: req.body.githubLink,
+        logoUrl: req.body.logoUrl,
+        collabs: req.body.collabs,
+        superCollabs: req.body.superCollabs,
       };
 
       await mongo.connect();
