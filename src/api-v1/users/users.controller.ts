@@ -132,48 +132,59 @@ export default class UserController {
 
   public getProjects = async (req: Request, res: Response): Promise<any> => {
     try {
-      await mongo.connect();
-      console.log(req.params._id);
-      const owned = await mongo
-        .db()
-        .collection("projects")
-        .find({
-          $or: [
-            {
-              owner: req.params._id,
-            },
-            {
-              superCollabs: req.params._id,
-            },
-          ],
-        })
-        .sort([["_id", -1]])
-        .toArray();
+      await mongo.connect((err) => {
+        console.log(req.params._id);
+        mongo
+          .db()
+          .collection("projects")
+          .find({
+            $or: [
+              {
+                owner: req.params._id,
+              },
+              {
+                superCollabs: req.params._id,
+              },
+            ],
+          })
+          .sort([["_id", -1]])
+          .toArray((err, result) => {
+            console.log("result", result);
+            var owned = result == null ? [] : result;
+            console.log("owned", owned);
+            mongo
+              .db()
+              .collection("projects")
+              .find(
+                {
+                  collabs: req.params._id,
+                },
+                { sort: { _id: -1 } }
+              )
+              .toArray((err, result) => {
+                console.log("owned", owned);
+                console.log("assigned", result);
+                var assigned = result == null ? [] : result;
+                var projects = { owned: owned, assigned: assigned };
+                console.log(projects);
 
-      const assigned = await mongo
-        .db()
-        .collection("projects")
-        .find(
-          {
-            collabs: req.params._id,
-          },
-          { sort: { _id: -1 } }
-        )
-        .toArray();
-
-      var projects = { owned: owned, assigned: assigned };
-
-      if (projects.owned.length === 0 && projects.assigned.length === 0) {
-        res.status(201).send({
-          success: true,
-          message: "User has no projects",
-        });
-      } else {
-        res.status(200).send({
-          success: true,
-          data: projects,
-        });
-      }
+                if (
+                  projects.owned.length === 0 &&
+                  projects.assigned.length === 0
+                ) {
+                  res.status(201).send({
+                    success: true,
+                    message: "User has no projects",
+                  });
+                } else {
+                  res.status(200).send({
+                    success: true,
+                    data: projects,
+                  });
+                }
+              });
+          });
+      });
     } catch (e) {
       console.error(e);
       res.status(500).send({
