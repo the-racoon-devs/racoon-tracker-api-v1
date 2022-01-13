@@ -371,18 +371,20 @@ export default class UserController {
       await mongo.connect((err) => {
         err && console.error(err);
 
-        var project = req.body;
-        project = {
-          ...project,
-          ...{
-            collabs: project.collabs.map((_id) => new ObjectId(_id)),
-            superCollabs: project.superCollabs.map((_id) => new ObjectId(_id)),
-          },
-        };
         mongo
           .db()
           .collection("projects")
-          .updateOne({ _id: new ObjectId(req.params._id) }, { $set: project })
+          .updateOne(
+            { _id: new ObjectId(req.params._id) },
+            {
+              $set: {
+                collabs: req.body.collabs.map((_id) => new ObjectId(_id)),
+                superCollabs: req.body.superCollabs.map(
+                  (_id) => new ObjectId(_id)
+                ),
+              },
+            }
+          )
           .then((result) => {
             if (result.matchedCount === 0) {
               res.status(201).send({
