@@ -168,8 +168,7 @@ export default class UserController {
 
       ticket = {
         ...ticket,
-        _id: new ObjectId(ticket._id),
-        project: new ObjectId(ticket.project),
+        project: new ObjectId(req.params._id),
         createdBy: new ObjectId(ticket.createdBy),
         assignedTo: new ObjectId(ticket.assignedTo),
         deadline: new Date(ticket.deadline),
