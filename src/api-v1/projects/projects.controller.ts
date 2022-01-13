@@ -215,7 +215,6 @@ export default class UserController {
           ...ticket,
           project: new ObjectId(req.params._id),
           createdBy: new ObjectId(ticket.createdBy),
-          assignedTo: new ObjectId(ticket.assignedTo),
           deadline: new Date(ticket.deadline),
         };
 
