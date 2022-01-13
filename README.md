@@ -1,79 +1,107 @@
-# the-racoon-app
-
-![image](https://user-images.githubusercontent.com/57835412/148271293-d22f224c-722d-424c-b552-e800a2e91d36.png)
-
-## Project setup
-
-Use `npm` to install the project dependencies:
-
-```bash
-npm install
-```
-
-## Configuration
  
-### Configure credentials
-
-The project needs to be configured with your Auth0 Domain, Client ID and Client Secret for the authentication flow to work.
-
-To do this, first copy `.env.local.example` into a new file in the same folder called `.env.local`, and replace the values with your own Auth0 application credentials (see more info about [loading environmental variables in Next.js](https://nextjs.org/docs/basic-features/environment-variables)):
-
-```sh
-# A long secret value used to encrypt the session cookie
-AUTH0_SECRET='LONG_RANDOM_VALUE'
-# The base url of your application
-AUTH0_BASE_URL='http://localhost:3000'
-# The url of your Auth0 tenant domain
-AUTH0_ISSUER_BASE_URL='https://YOUR_AUTH0_DOMAIN.auth0.com'
-# Your Auth0 application's Client ID
-AUTH0_CLIENT_ID='YOUR_AUTH0_CLIENT_ID'
-# Your Auth0 application's Client Secret
-AUTH0_CLIENT_SECRET='YOUR_AUTH0_CLIENT_SECRET'
-# Your Auth0 API's Identifier 
-# OMIT if you do not want to use the API part of the sample
-AUTH0_AUDIENCE='YOUR_AUTH0_API_IDENTIFIER'
-# The permissions your app is asking for
-# OMIT if you do not want to use the API part of the sample
-AUTH0_SCOPE='openid profile email read:shows'
-```
-
-**Note**: Make sure you replace `AUTH0_SECRET` with your own secret (you can generate a suitable string using `openssl rand -hex 32` on the command line).
-
-## Run the sample
-
-### Compile and hot-reload for development
-
-This compiles and serves the Next.js app and starts the API server on port 3001.
-
-```bash
-npm run dev
-```
-
-## Deployment
-
-### Compiles and minifies for production
-
-```bash
-npm run build
-```
-
-### Docker build
-
-To build and run the Docker image, run `exec.sh`, or `exec.ps1` on Windows.
-
-### Run the unit tests
-
-```bash
-npm run test
-```
-
-### Run the integration tests
-
-```bash
-npm run test:integration
-```
 
 
-## License
+### Overview of Our Submission
 
-This project is licensed under the MIT license. See the [LICENSE](./LICENSE) file for more info.
+The "**Racoon Tracker**" is an issue/project tracker that helps ease software delivery by making the whole process of tracking and keeping up with bug fixes seamless and easy.
+
+**Submit, Track & Resolve bugs in a snap!**
+
+
+---- 
+
+
+### Submission Category
+Choose Our Own Adventure
+
+
+----
+
+### Links to Code
+Front End React App: 
+https://github.com/the-racoon-devs/racoon-tracker-fe-v1
+
+Back End Rest API: 
+https://github.com/the-racoon-devs/racoon-tracker-api-v1
+
+Published API Documentation:
+https://documenter.getpostman.com/view/18928487/UVXeteBv
+
+
+----
+
+
+### Our Tech Stack
+#### **Design System**
+
+Our design system is entirely built on Tailwind's beautiful CSS framework and UI kit.
+
+![](https://i.imgur.com/0ZAcwQj.png)
+
+
+#### **Front-End**
+
+Our front-end is built on a custom CRA boilerplate with React.js and TypeScript.
+
+![](https://i.imgur.com/6khAPym.png)
+
+#### **Back-End**
+
+Our back-end is built on Express.js with the ability to scale quickly and add more functionality in the form of microservices.
+
+![](https://i.imgur.com/7TcM6u3.png)
+
+
+#### **Database**
+
+MongoDB Atlas provides cloud database service using AWS, Azure, and Google Cloud. It also has various automation tools for performing various backend functionalities and comes with visualization tools. The services that are used in this project are described below.
+
+Atlas is used as the main cloud database for storing the user information and project information along with it's tickets.
+
+![](https://i.imgur.com/ppT8DJc.png)
+
+
+#### **Deployments**
+
+Our React Front End is deployed over Netlify's Jamstack App Deployment platform.
+
+Our Express Back End is deployed over Railway.app cloud serverless platform.
+
+---- 
+
+
+## Screenshots:
+ 
+![](https://i.imgur.com/SEi6s8J.png)
+
+--------------
+
+![](https://i.imgur.com/BbXKvmT.png)
+
+--------------
+
+![](https://i.imgur.com/FpwhNGz.png)
+
+--------------
+
+![](https://i.imgur.com/QPBM3If.png)
+
+--------------
+
+![](https://i.imgur.com/Q93xXdv.png)
+
+--------------
+
+![](https://i.imgur.com/XtURRdW.png)
+
+
+--------------------------------------
+
+### Collaborators
+@fabianferno, [Twitter](https://twitter.com/fabianferno)
+@thedanielmark, [Twitter](https://twitter.com/the_danielmark)
+
+--------------------------------------
+
+### Additional Resources / Info
+React CRA Boilerplate: https://github.com/react-boilerplate/react-boilerplate-cra-template
