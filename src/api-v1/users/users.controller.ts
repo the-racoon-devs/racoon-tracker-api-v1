@@ -162,7 +162,6 @@ export default class UserController {
         .toArray();
 
       var projects = { owned: owned, assigned: assigned };
-      console.log(projects);
 
       if (projects.owned.length === 0 && projects.assigned.length === 0) {
         res.status(201).send({
@@ -175,11 +174,11 @@ export default class UserController {
           data: projects,
         });
       }
-    } catch (err) {
+    } catch (e) {
+      console.error(e);
       res.status(500).send({
         success: false,
-        message: err.toString(),
-        data: null,
+        message: e.toString(),
       });
     }
   };

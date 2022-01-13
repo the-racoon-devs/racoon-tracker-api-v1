@@ -23,6 +23,7 @@ export default class UserController {
         data: result,
       });
     } catch (e) {
+      console.error(e);
       res.status(500).send({
         success: false,
         message: e.message,
@@ -69,6 +70,7 @@ export default class UserController {
         });
       }
     } catch (e) {
+      console.error(e);
       res.status(500).send({
         success: false,
         message: e.message,
@@ -132,6 +134,7 @@ export default class UserController {
         });
       }
     } catch (e) {
+      console.error(e);
       res.status(500).send({
         success: false,
         message: e.message,
@@ -152,6 +155,7 @@ export default class UserController {
         data: projects,
       });
     } catch (e) {
+      console.error(e);
       res.status(500).send({
         success: false,
         message: e.message,
@@ -180,6 +184,7 @@ export default class UserController {
         data: result,
       });
     } catch (e) {
+      console.error(e);
       res.status(500).send({
         success: false,
         message: e.message,
@@ -335,6 +340,7 @@ export default class UserController {
         });
       }
     } catch (e) {
+      console.error(e);
       res.status(500).send({
         success: false,
         message: e.message,
@@ -393,6 +399,7 @@ export default class UserController {
         }
       }
     } catch (e) {
+      console.error(e);
       res.status(500).send({
         success: false,
         message: e.message,
