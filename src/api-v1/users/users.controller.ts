@@ -38,6 +38,7 @@ export default class UserController {
                 }
               )
               .then((userData) => {
+                mongo.close();
                 console.log(userData);
                 if (userData === null) {
                   res.status(201).send({
@@ -60,8 +61,6 @@ export default class UserController {
     } catch (e) {
       console.error(e);
       res.status(500).send(e);
-    } finally {
-      await mongo.close();
     }
   };
 
@@ -83,6 +82,7 @@ export default class UserController {
             }
           )
           .then((result) => {
+            mongo.close();
             if (result === null) {
               res.status(201).send({
                 success: false,
@@ -103,8 +103,6 @@ export default class UserController {
     } catch (e) {
       console.error(e);
       res.status(500).send(e);
-    } finally {
-      await mongo.close();
     }
   };
 
@@ -120,6 +118,7 @@ export default class UserController {
             .sort([["_id", -1]])
             .toArray((err, result) => {
               err && console.log(err);
+              mongo.close();
               res.status(200).send({
                 success: true,
                 data: result,
@@ -174,6 +173,7 @@ export default class UserController {
               )
               .toArray((err, result) => {
                 err && console.log(err);
+                mongo.close();
                 var assigned = result == null ? [] : result;
                 var projects = { owned: owned, assigned: assigned };
 

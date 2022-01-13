@@ -23,12 +23,14 @@ export default class UserController {
           .collection("projects")
           .insertOne(project)
           .then((result) => {
+            mongo.close();
             res.status(200).send({
               success: true,
               data: result,
             });
           })
           .catch((err) => {
+            mongo.close();
             console.log(err);
             res.status(500).send(err);
           });
@@ -39,8 +41,6 @@ export default class UserController {
         success: false,
         message: e.message,
       });
-    } finally {
-      await mongo.close();
     }
   };
 
@@ -63,6 +63,7 @@ export default class UserController {
           .collection("projects")
           .updateOne({ _id: new ObjectId(req.params._id) }, { $set: project })
           .then((result) => {
+            mongo.close();
             if (result.matchedCount === 0) {
               res.status(404).send({
                 success: false,
@@ -81,6 +82,7 @@ export default class UserController {
             }
           })
           .catch((err) => {
+            mongo.close();
             console.log(err);
             res.status(500).send({
               success: false,
@@ -94,8 +96,6 @@ export default class UserController {
         success: false,
         message: e.message,
       });
-    } finally {
-      await mongo.close();
     }
   };
 
@@ -110,6 +110,7 @@ export default class UserController {
             _id: new ObjectId(req.params._id),
           })
           .then((result) => {
+            mongo.close();
             if (result.deletedCount === 0) {
               res.status(404).send({
                 success: false,
@@ -123,6 +124,7 @@ export default class UserController {
             }
           })
           .catch((err) => {
+            mongo.close();
             console.error(err);
             res.status(500).send({
               success: false,
@@ -136,8 +138,6 @@ export default class UserController {
         success: false,
         message: e.message,
       });
-    } finally {
-      await mongo.close();
     }
   };
 
@@ -152,6 +152,7 @@ export default class UserController {
             _id: new ObjectId(req.params._id),
           })
           .then((result) => {
+            mongo.close();
             if (result === null) {
               res.status(201).send({
                 success: false,
@@ -165,6 +166,7 @@ export default class UserController {
             }
           })
           .catch((err) => {
+            mongo.close();
             res.status(500).send({
               success: false,
               message: err.message,
@@ -177,8 +179,6 @@ export default class UserController {
         success: false,
         message: e.message,
       });
-    } finally {
-      await mongo.close();
     }
   };
 
@@ -191,6 +191,7 @@ export default class UserController {
           .collection("projects")
           .find()
           .toArray((err, result) => {
+            mongo.close();
             if (err) {
               console.error(err);
               res.status(500).send({
@@ -211,8 +212,6 @@ export default class UserController {
         success: false,
         message: e.message,
       });
-    } finally {
-      await mongo.close();
     }
   };
 
@@ -234,12 +233,14 @@ export default class UserController {
           .collection("tickets")
           .insertOne(ticket)
           .then((result) => {
+            mongo.close();
             res.status(200).send({
               success: true,
               data: result,
             });
           })
           .catch((err) => {
+            mongo.close();
             console.log(err);
             res.status(500).send(err);
           });
@@ -250,8 +251,6 @@ export default class UserController {
         success: false,
         message: e.message,
       });
-    } finally {
-      await mongo.close();
     }
   };
 
@@ -274,6 +273,7 @@ export default class UserController {
           .collection("tickets")
           .updateOne({ _id: new ObjectId(ticket._id) }, { $set: ticket })
           .then((result) => {
+            mongo.close();
             if (result.matchedCount === 0) {
               res.status(201).send({
                 success: false,
@@ -292,6 +292,7 @@ export default class UserController {
             }
           })
           .catch((err) => {
+            mongo.close();
             console.log(err);
             res.status(500).send(err);
           });
@@ -302,8 +303,6 @@ export default class UserController {
         success: false,
         message: e.message,
       });
-    } finally {
-      await mongo.close();
     }
   };
 
@@ -318,6 +317,7 @@ export default class UserController {
             _id: new ObjectId(req.body._id),
           })
           .then((result) => {
+            mongo.close();
             if (result.deletedCount === 0) {
               res.status(201).send({
                 success: false,
@@ -331,6 +331,7 @@ export default class UserController {
             }
           })
           .catch((err) => {
+            mongo.close();
             console.log(err);
             res.status(500).send(err);
           });
@@ -341,8 +342,6 @@ export default class UserController {
         success: false,
         message: e.message,
       });
-    } finally {
-      await mongo.close();
     }
   };
 
@@ -359,6 +358,7 @@ export default class UserController {
           .sort([["_id", -1]])
           .toArray((err, result) => {
             err && console.error(err);
+            mongo.close();
             if (result.length === 0) {
               res.status(201).send({
                 success: false,
@@ -378,8 +378,6 @@ export default class UserController {
         success: false,
         message: e.message,
       });
-    } finally {
-      await mongo.close();
     }
   };
 
@@ -401,6 +399,7 @@ export default class UserController {
           .collection("projects")
           .updateOne({ _id: new ObjectId(req.params._id) }, { $set: project })
           .then((result) => {
+            mongo.close();
             if (result.matchedCount === 0) {
               res.status(201).send({
                 success: false,
@@ -419,6 +418,7 @@ export default class UserController {
             }
           })
           .catch((err) => {
+            mongo.close();
             console.log(err);
             res.status(500).send(err);
           });
@@ -429,8 +429,6 @@ export default class UserController {
         success: false,
         message: e.message,
       });
-    } finally {
-      await mongo.close();
     }
   };
 
@@ -464,6 +462,7 @@ export default class UserController {
                   { $set: project }
                 )
                 .then((result) => {
+                  mongo.close();
                   if (result.matchedCount === 0) {
                     res.status(201).send({
                       success: false,
@@ -486,6 +485,7 @@ export default class UserController {
                   res.status(500).send(err);
                 });
             } else {
+              mongo.close();
               res.status(201).send({
                 success: false,
                 message: "Project not found",
@@ -499,8 +499,6 @@ export default class UserController {
         success: false,
         message: e.message,
       });
-    } finally {
-      await mongo.close();
     }
   };
 }
